@@ -1,6 +1,9 @@
 #pragma once
 #include "Renderer/Shader.h"
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Renderer 
 {
@@ -20,6 +23,10 @@ namespace Renderer
             unsigned int m_VAO;
             unsigned int m_VBO;
             unsigned int m_shaderProgram;
+
+            glm::mat4 m_Model;
+            glm::mat4 m_View;
+            glm::mat4 m_Projection;
 
             void InitTriangle();
             void InitShaders();
