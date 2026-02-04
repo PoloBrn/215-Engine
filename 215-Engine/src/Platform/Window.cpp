@@ -20,6 +20,7 @@ namespace Platform
         }
 
         m_windowHandle = static_cast<void*>(window);
+        glfwMakeContextCurrent(window);
     }
 
     Window::~Window() 

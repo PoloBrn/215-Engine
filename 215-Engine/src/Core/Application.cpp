@@ -7,11 +7,9 @@ namespace Core
 {
     Application::Application(std::unique_ptr<Platform::Window> window) : m_window(std::move(window)), m_running(false)
     {
-        if (!m_window)
-        {
-            throw std::invalid_argument("Window pointer is null");
-        }
+        if (!m_window) throw std::invalid_argument("Window pointer is null");
         
+        m_renderer = std::make_unique<Renderer::Renderer>(m_window->getGLFWwindow());        
     }
 
     Application::~Application() 
@@ -29,8 +27,9 @@ namespace Core
         {
             m_window->pollEvents();
 
-            // Simulate some work being done in the application
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            m_renderer->Clear(0.1f, 0.1f, 0.1f, 1.0f);
+            m_renderer->DrawTriangle();
+            m_renderer->SwapBuffers();
         }
 
         std::cout << "Application stopped." << std::endl;
