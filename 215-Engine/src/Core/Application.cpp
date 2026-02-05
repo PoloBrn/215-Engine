@@ -28,7 +28,7 @@ namespace Core
             m_window->pollEvents();
 
             m_renderer->Clear(0.1f, 0.1f, 0.1f, 1.0f);
-            m_renderer->DrawTriangle();
+            m_renderer->Render();
             m_renderer->SwapBuffers();
         }
 

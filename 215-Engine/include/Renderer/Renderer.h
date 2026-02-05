@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <memory>
 
 namespace Renderer 
 {
@@ -14,21 +15,35 @@ namespace Renderer
             ~Renderer();
 
             void Clear(float r, float g, float b, float a);
-            void DrawTriangle();
+            void Render();
             void SwapBuffers();
 
         private:
             GLFWwindow* m_window;
 
-            unsigned int m_VAO;
-            unsigned int m_VBO;
-            unsigned int m_shaderProgram;
+            // axes
+            unsigned int m_axesVAO, m_axesVBO;
+            unsigned int m_axesShaderProgram;
 
-            glm::mat4 m_Model;
-            glm::mat4 m_View;
-            glm::mat4 m_Projection;
+            // triangle
+            unsigned int m_triangleVAO, m_triangleVBO;
+            unsigned int m_triangleShaderProgram;
+
+            glm::mat4 m_model;
+            glm::mat4 m_view;
+            glm::mat4 m_projection;
+            
+            std::unique_ptr<Shader> m_axesShader;
+            std::unique_ptr<Shader> m_triangleShader;
+
+            void InitMatrices();
+
+            void InitAxes();
+            void InitAxesShaders();
+            void DrawAxes();
 
             void InitTriangle();
-            void InitShaders();
+            void InitTriangleShaders();
+            void DrawTriangle();
     };
 }
