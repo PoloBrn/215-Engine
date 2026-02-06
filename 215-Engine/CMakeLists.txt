@@ -15,6 +15,10 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include
 # create library
 add_library(Engine STATIC
     src/Core/Application.cpp
+    src/Core/Input.cpp
+    src/Core/Component.cpp
+    src/Core/Transform.cpp
+    src/Core/Entity.cpp
     src/Platform/Window.cpp
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp

@@ -1,6 +1,7 @@
 #pragma once
 #include "Platform/Window.h"
 #include "Renderer/Renderer.h"
+#include "Core/Input.h"
 #include <memory>
 
 namespace Core 

@@ -207,8 +207,11 @@ namespace Renderer
 
     void Renderer::Render()
     {
+        glUseProgram(m_axesShaderProgram);
         DrawAxes();
-        //DrawTriangle();
+
+        // glUseProgram(m_triangleShaderProgram);
+        // DrawTriangle();
     }
 
     void Renderer::SwapBuffers() 
