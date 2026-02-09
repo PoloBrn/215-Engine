@@ -2,6 +2,7 @@
 #include "Platform/Window.h"
 #include "Renderer/Renderer.h"
 #include "Core/Input.h"
+#include "Core/Scene.h"
 #include <memory>
 
 namespace Core 
@@ -10,7 +11,6 @@ namespace Core
     {
         public:
             Application(std::unique_ptr<Platform::Window> window);
-            ~Application();
 
             // Starts the main application loop
             void Run();
@@ -19,5 +19,6 @@ namespace Core
             bool m_running; // Indicates if the application is running
             std::unique_ptr<Platform::Window> m_window; // The application window
             std::unique_ptr<Renderer::Renderer> m_renderer; // The renderer
+            Scene m_scene;
     };
 }

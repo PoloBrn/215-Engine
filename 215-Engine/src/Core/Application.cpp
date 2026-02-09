@@ -1,4 +1,5 @@
 #include "Core/Application.h"
+#include "Core/Time.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -16,11 +17,6 @@ namespace Core
         Core::Input::Initialize(m_window->getGLFWwindow());   
     }
 
-    Application::~Application() 
-    {
-        // Destructor implementation
-    }
-
     void Application::Run() 
     {
         m_running = true;
@@ -31,15 +27,16 @@ namespace Core
         while (m_running && !m_window->shouldClose()) 
         {
             float currentFrame = static_cast<float>(glfwGetTime());
-            float deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
+            Core::Time::Update(currentFrame);
 
             m_window->pollEvents();
+
+            m_scene.Update();
 
             m_renderer->Clear(0.1f, 0.1f, 0.1f, 1.0f);
             m_renderer->Render();
             m_renderer->SwapBuffers();
-            Core::Input::Update(m_window->getGLFWwindow(), deltaTime);
+            Core::Input::Update(m_window->getGLFWwindow(), Core::Time::DeltaTime());
         }
 
         std::cout << "Application stopped." << std::endl;

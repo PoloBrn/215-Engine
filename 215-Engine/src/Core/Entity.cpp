@@ -17,10 +17,10 @@ namespace Core
         m_started = true;
     }
 
-    void Entity::Update(float deltaTime)
+    void Entity::Update()
     {
         if (!m_started) Start();
 
-        for (auto& component : m_components) component->OnUpdate(deltaTime);
+        for (auto& component : m_components) component->OnUpdate();
     }
 }

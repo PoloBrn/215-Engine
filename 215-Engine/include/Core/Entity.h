@@ -20,7 +20,7 @@ namespace Core
             template<typename T> T* GetComponent() const;
 
             void Start();
-            void Update(float deltaTime);
+            void Update();
 
         private:
             Transform m_transform;

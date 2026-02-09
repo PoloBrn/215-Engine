@@ -10,14 +10,13 @@ namespace Core
             virtual ~Component() = default;
 
             virtual void OnStart() {}
-            virtual void OnUpdate(float deltaTime) {}
+            virtual void OnUpdate() {}
+            virtual void OnDestroy() {}
 
             Entity* GetEntity() const;
-        
-        protected:
-            Entity* m_entity = nullptr;
 
         private:
+            Entity* m_entity = nullptr;
             friend class Entity;
             void SetEntity(Entity* entity);
     };
