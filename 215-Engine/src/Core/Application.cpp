@@ -31,13 +31,15 @@ namespace Core
             Core::Time::Update(currentFrame);
 
             m_window->pollEvents();
+            
+            Core::Input::Update();
+            m_editorCamera.Update();
 
             m_scene.Update();
 
             m_renderer->Clear(0.1f, 0.1f, 0.1f, 1.0f);
             m_renderer->Render(m_editorCamera);
             m_renderer->SwapBuffers();
-            Core::Input::Update(m_window->getGLFWwindow(), Core::Time::DeltaTime());
         }
 
         std::cout << "Application stopped." << std::endl;

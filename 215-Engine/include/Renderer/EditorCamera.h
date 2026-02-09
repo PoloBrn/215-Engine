@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "Core/Input.h"
 
 namespace Renderer
 {
@@ -16,6 +17,7 @@ namespace Renderer
         private:
             void RecalculateView();
             void RecalculateProjection();
+            glm::vec3 GetForwardDirection() const;
 
             float m_fov;
             float m_aspectRatio;
