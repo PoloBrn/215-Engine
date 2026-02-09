@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer/Shader.h"
+#include "Renderer/EditorCamera.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,7 +16,7 @@ namespace Renderer
             ~Renderer();
 
             void Clear(float r, float g, float b, float a);
-            void Render();
+            void Render(const EditorCamera& camera);
             void SwapBuffers();
 
         private:
@@ -30,20 +31,11 @@ namespace Renderer
             unsigned int m_triangleShaderProgram;
 
             glm::mat4 m_model;
-            glm::mat4 m_view;
-            glm::mat4 m_projection;
             
             std::unique_ptr<Shader> m_axesShader;
-            std::unique_ptr<Shader> m_triangleShader;
-
-            void InitMatrices();
 
             void InitAxes();
             void InitAxesShaders();
-            void DrawAxes();
-
-            void InitTriangle();
-            void InitTriangleShaders();
-            void DrawTriangle();
+            void DrawAxes(const EditorCamera& camera);
     };
 }

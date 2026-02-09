@@ -37,30 +37,6 @@ namespace Renderer
         }
     )";
 
-    // Triangle shader source
-    const char* triangleVertexShaderSource = R"(
-        #version 330 core
-        layout(location = 0) in vec3 aPos;
-
-        uniform mat4 u_Model;
-        uniform mat4 u_View;
-        uniform mat4 u_Projection;
-
-        void main()
-        {
-            gl_Position = u_Projection * u_View * u_Model * vec4(aPos, 1.0);
-        }
-    )";
-
-    const char* triangleFragmentShaderSource = R"(
-        #version 330 core
-        out vec4 FragColor;
-        void main()
-        {
-            FragColor = vec4(1.0, 0.5, 0.2, 1.0);
-        }
-    )";
-
     Renderer::Renderer(GLFWwindow* window) : m_window(window)
     {
         if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress))
@@ -68,14 +44,9 @@ namespace Renderer
 
         // Setup basic transformations matrices
         m_model = glm::mat4(1.0f);
-        m_view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        m_projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-        InitMatrices();
         InitAxesShaders();
         InitAxes();
-        InitTriangleShaders();
-        InitTriangle();
     }
 
     Renderer::~Renderer() 
@@ -87,22 +58,6 @@ namespace Renderer
         glDeleteVertexArrays(1, &m_triangleVAO);
         glDeleteBuffers(1, &m_triangleVBO);
         glDeleteProgram(m_triangleShaderProgram);
-    }
-
-    void Renderer::InitMatrices()
-    {
-        m_model = glm::mat4(1.0f);
-        m_view = glm::lookAt(
-            glm::vec3(0.0f, 0.0f, 3.0f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f)
-        );
-        m_projection = glm::perspective(
-            glm::radians(45.0f),
-            800.0f / 600.0f,
-            0.1f,
-            100.0f
-        );
     }
 
     void Renderer::InitAxesShaders()
@@ -145,70 +100,28 @@ namespace Renderer
         glBindVertexArray(0);
     }
 
-    void Renderer::InitTriangleShaders()
-    {
-        m_triangleShader = std::make_unique<Shader>(
-        triangleVertexShaderSource,
-        triangleFragmentShaderSource
-        );
-        m_triangleShaderProgram = m_triangleShader->GetID();
-    }
-
-    void Renderer::InitTriangle() 
-    {
-        float vertices[] = {
-            0.0f,  0.5f, 0.0f,
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f
-        };
-        
-        glGenVertexArrays(1, &m_triangleVAO);
-        glGenBuffers(1, &m_triangleVBO);
-
-        glBindVertexArray(m_triangleVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        glBindVertexArray(0);
-    }
-
     void Renderer::Clear(float r, float g, float b, float a) 
     {
         glClearColor(r, g, b, a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void Renderer::DrawAxes()
+    void Renderer::DrawAxes(const EditorCamera& camera)
     {
         glUseProgram(m_axesShaderProgram);
 
         glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_Model"), 1, GL_FALSE, glm::value_ptr(m_model));
-        glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_View"), 1, GL_FALSE, glm::value_ptr(m_view));
-        glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_Projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+        glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_View"), 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));
+        glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_Projection"), 1, GL_FALSE, glm::value_ptr(camera.GetProjectionMatrix()));
 
         glBindVertexArray(m_axesVAO);
         glDrawArrays(GL_LINES, 0, 6);
     }
 
-    void Renderer::DrawTriangle() 
-    {
-        glUseProgram(m_triangleShaderProgram);
-
-        glUniformMatrix4fv(glGetUniformLocation(m_triangleShaderProgram, "u_Model"), 1, GL_FALSE, glm::value_ptr(m_model));
-        glUniformMatrix4fv(glGetUniformLocation(m_triangleShaderProgram, "u_View"), 1, GL_FALSE, glm::value_ptr(m_view));
-        glUniformMatrix4fv(glGetUniformLocation(m_triangleShaderProgram, "u_Projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
-
-        glBindVertexArray(m_triangleVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-    }
-
-    void Renderer::Render()
+    void Renderer::Render(const EditorCamera& camera)
     {
         glUseProgram(m_axesShaderProgram);
-        DrawAxes();
+        DrawAxes(camera);
 
         // glUseProgram(m_triangleShaderProgram);
         // DrawTriangle();

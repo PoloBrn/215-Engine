@@ -20,5 +20,6 @@ namespace Core
             std::unique_ptr<Platform::Window> m_window; // The application window
             std::unique_ptr<Renderer::Renderer> m_renderer; // The renderer
             Scene m_scene;
+            Renderer::EditorCamera m_editorCamera;
     };
 }

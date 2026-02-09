@@ -6,7 +6,8 @@
 
 namespace Core 
 {
-    Application::Application(std::unique_ptr<Platform::Window> window) : m_window(std::move(window)), m_running(false)
+    Application::Application(std::unique_ptr<Platform::Window> window) : 
+    m_window(std::move(window)), m_running(false), m_editorCamera(45.0f, 800.0f / 600.0f, 0.1f, 100.0f)
     {
         if (!m_window) throw std::invalid_argument("Window pointer is null");
         GLFWwindow* glfwWindow = m_window->getGLFWwindow();
@@ -34,7 +35,7 @@ namespace Core
             m_scene.Update();
 
             m_renderer->Clear(0.1f, 0.1f, 0.1f, 1.0f);
-            m_renderer->Render();
+            m_renderer->Render(m_editorCamera);
             m_renderer->SwapBuffers();
             Core::Input::Update(m_window->getGLFWwindow(), Core::Time::DeltaTime());
         }
