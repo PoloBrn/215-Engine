@@ -25,6 +25,8 @@ add_library(Engine STATIC
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp
     src/Renderer/EditorCamera.cpp
+    src/Renderer/Gizmo.cpp
+    src/Renderer/Grid.cpp
 )
 
 # include for headers

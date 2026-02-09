@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer/Shader.h"
 #include "Renderer/EditorCamera.h"
+#include "Renderer/Grid.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,6 +22,7 @@ namespace Renderer
 
         private:
             GLFWwindow* m_window;
+            std::unique_ptr<Grid> m_grid;
 
             // axes
             unsigned int m_axesVAO, m_axesVBO;

@@ -47,6 +47,7 @@ namespace Renderer
 
         InitAxesShaders();
         InitAxes();
+        m_grid = std::make_unique<Grid>(10, 1.0f);
     }
 
     Renderer::~Renderer() 
@@ -108,6 +109,7 @@ namespace Renderer
 
     void Renderer::DrawAxes(const EditorCamera& camera)
     {
+        glDisable(GL_DEPTH_TEST);
         glUseProgram(m_axesShaderProgram);
 
         glUniformMatrix4fv(glGetUniformLocation(m_axesShaderProgram, "u_Model"), 1, GL_FALSE, glm::value_ptr(m_model));
@@ -116,19 +118,14 @@ namespace Renderer
 
         glBindVertexArray(m_axesVAO);
         glDrawArrays(GL_LINES, 0, 6);
+        glEnable(GL_DEPTH_TEST);
     }
 
     void Renderer::Render(const EditorCamera& camera)
     {
-        glUseProgram(m_axesShaderProgram);
+        m_grid->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix());
         DrawAxes(camera);
-
-        // glUseProgram(m_triangleShaderProgram);
-        // DrawTriangle();
     }
 
-    void Renderer::SwapBuffers() 
-    {
-        glfwSwapBuffers(m_window);
-    }
+    void Renderer::SwapBuffers() { glfwSwapBuffers(m_window); }
 }

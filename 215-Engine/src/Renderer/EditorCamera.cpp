@@ -60,6 +60,8 @@ namespace Renderer
         RecalculateView();
     }
 
+    glm::vec3 EditorCamera::GetPosition() const { return m_position; }
+
     void EditorCamera::RecalculateProjection()
     {
         m_projection = glm::perspective(

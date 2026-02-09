@@ -11,13 +11,14 @@ namespace Renderer
 
             void Update();
 
+            glm::vec3 GetPosition() const;
+            glm::vec3 GetForwardDirection() const;  
             const glm::mat4& GetViewMatrix() const;
             const glm::mat4& GetProjectionMatrix() const;
 
         private:
             void RecalculateView();
             void RecalculateProjection();
-            glm::vec3 GetForwardDirection() const;
 
             float m_fov;
             float m_aspectRatio;
