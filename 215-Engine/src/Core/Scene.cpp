@@ -1,19 +1,18 @@
 #include "Core/Scene.h"
+#include <iostream>
 
 namespace Core
 {
-    Entity& Scene::CreateEntity()
+    Entity& Scene::CreateEntity(const std::string& name)
     {
         auto entity = std::make_unique<Entity>();
+        entity->SetName(name);
         Entity& ref = *entity;
-        m_entities.emplace_back(std::move(entity));
+        m_entities.push_back(std::move(entity));
         return ref;
     }
 
-    void Scene::Update()
-    {
-        for (auto& entity : m_entities) entity->Update();
-    }
+    void Scene::Update() { for (auto& entity : m_entities) entity->Update(); }
 
     Entity* Scene::Pick(const glm::vec2& mousePos, const Renderer::EditorCamera& camera, const glm::ivec2& viewportSize)
     {
@@ -56,7 +55,15 @@ namespace Core
                 picked = e.get();
             }
         }
-
         return picked;
+    }
+
+    void Scene::ListHierarchy() const
+    {
+        for (auto& e : m_entities)
+        {
+            std::cout << e->GetName() << "\n";
+            e->ListChildren(2);
+        }
     }
 }

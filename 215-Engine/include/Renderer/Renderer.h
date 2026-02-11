@@ -1,12 +1,12 @@
 #pragma once
-#include "Renderer/Shader.h"
-#include "Renderer/EditorCamera.h"
-#include "Renderer/Grid.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <memory>
+#include "Renderer/Shader.h"
+#include "Renderer/EditorCamera.h"
+#include "Renderer/Grid.h"
 
 namespace Renderer 
 {

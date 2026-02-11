@@ -51,3 +51,7 @@ cmake --build .
 
 # Running the Sandbox
 After building, navigate to the `MyEngine_215\build\215-Engine-Sandbox\Debug` directory and run the `Sandbox.exe` executable to see the engine in action.
+
+# Commands
+``` add tri ``` -> Create an Entity with a MeshRenderer, visually a triangle (isosceles triangle).
+``` list ``` -> List all the entities in the current Scene.

@@ -21,12 +21,16 @@ add_library(Engine STATIC
     src/Core/Component.cpp
     src/Core/Transform.cpp
     src/Core/Entity.cpp
+    src/Core/RenderSystem.cpp
+    src/Core/MeshRenderer.cpp
     src/Platform/Window.cpp
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp
     src/Renderer/EditorCamera.cpp
     src/Renderer/Gizmo.cpp
     src/Renderer/Grid.cpp
+    src/Renderer/Mesh.cpp
+    src/Renderer/Material.cpp
 )
 
 # include for headers
