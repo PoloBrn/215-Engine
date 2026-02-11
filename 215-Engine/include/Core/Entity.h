@@ -35,15 +35,19 @@ namespace Core
 
             void SetName(const std::string& name) { m_name = name; }
             const std::string& GetName() { return m_name; }
+            const std::string& GetGUID() const { return m_guid; }
 
         private:
             std::string m_name;
+            std::string m_guid;
             Transform m_transform;
             std::vector<std::unique_ptr<Component>> m_components;
             bool m_started = false;
 
             Entity* m_parent = nullptr;
             std::vector<std::unique_ptr<Entity>> m_children;
+
+            std::string GenerateGUID();
     };
     
     template<typename T> bool Entity::HasComponent() const

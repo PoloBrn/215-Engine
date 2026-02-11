@@ -12,7 +12,22 @@ namespace Core
         return ref;
     }
 
-    void Scene::Update() { for (auto& entity : m_entities) entity->Update(); }
+    Entity* Scene::FindEntityByGUID(const std::string& guid)
+    {
+        for (auto& e : m_entities) if (e->GetGUID() == guid) return e.get();
+        return nullptr;
+    }
+
+    bool Scene::RemoveEntityByGUID(const std::string& guid)
+    {
+        auto it = std::remove_if(m_entities.begin(), m_entities.end(), [&guid](const std::unique_ptr<Entity>& e){ return e->GetGUID() == guid; });
+        if (it != m_entities.end())
+        {
+            m_entities.erase(it, m_entities.end());
+            return true;
+        }
+        return false;
+    }
 
     Entity* Scene::Pick(const glm::vec2& mousePos, const Renderer::EditorCamera& camera, const glm::ivec2& viewportSize)
     {
@@ -57,6 +72,8 @@ namespace Core
         }
         return picked;
     }
+
+    void Scene::Update() { for (auto& entity : m_entities) entity->Update(); }
 
     void Scene::ListHierarchy() const
     {

@@ -48,14 +48,27 @@ namespace Core
             if (cmd == "add tri")
             {
                 Entity& tri = m_scene.CreateEntity("Triangle2D");
-                std::cout << "Entity created: " << tri.GetName() << std::endl;
                 tri.GetTransform().SetPosition({0.0f, 0.0f, 0.0f});
-                auto renderer = tri.AddComponent<MeshRenderer>();
+                tri.AddComponent<MeshRenderer>();
+                std::cout << "Entity created: " << tri.GetName() << " GUID: " << tri.GetGUID() << std::endl;
+            }
+            else if (cmd.find("delete ") == 0)
+            {
+                std::string guid = cmd.substr(7);
+                if (m_scene.RemoveEntityByGUID(guid)) std::cout << "Entity with GUID " << guid << " removed.\n";
+                else std::cout << "No Entity with GUID " << guid << " found.\n";
             }
             else if (cmd == "list")
             {
                 std::cout << "Scene hierarchy:\n";
                 m_scene.ListHierarchy();
+            }
+            else if (cmd.find("find ") == 0)
+            {
+                std::string guid = cmd.substr(5);
+                Entity* e = m_scene.FindEntityByGUID(guid);
+                if (e) std::cout << "Found entity: " << e->GetName() << "\n";
+                else std::cout << "No entity with GUID " << guid << "\n";
             }
         }
     }

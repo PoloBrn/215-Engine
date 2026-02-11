@@ -10,6 +10,8 @@ namespace Core
     {
         public:
             Entity& CreateEntity(const std::string& name);
+            Entity* FindEntityByGUID(const std::string& guid);
+            bool RemoveEntityByGUID(const std::string& guid);
             Entity* Pick(const glm::vec2& mousePos, const Renderer::EditorCamera& camera, const glm::ivec2& viewportSize);
             void Update();
 
