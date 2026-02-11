@@ -55,7 +55,7 @@ After building, navigate to the `MyEngine_215\build\215-Engine-Sandbox\Debug` di
 # Commands
 Command	Description
 | Command | Description |
-|--------------|-------------|
+|---------|-------------|
 | ```add tri``` | Create an Entity with a MeshRenderer, visually a triangle (isosceles triangle). |
 | ```list``` | List all entities in the current Scene, including child entities. |
 | ```find <GUID>``` | Find an entity by its GUID and print its name. |
