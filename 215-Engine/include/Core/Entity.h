@@ -20,17 +20,7 @@ namespace Core
 
             template<typename T, typename... Args> T* AddComponent(Args&&... args);
             template<typename T> T* GetComponent() const;
-            template<typename T> bool HasComponent() const
-            {
-                static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
-
-                for (const auto& component : m_components)
-                {
-                    if (dynamic_cast<T*>(component.get()))
-                        return true;
-                }
-                return false;
-            }
+            template<typename T> bool HasComponent() const;
 
             void Start();
             void Update();
@@ -55,6 +45,18 @@ namespace Core
             Entity* m_parent = nullptr;
             std::vector<std::unique_ptr<Entity>> m_children;
     };
+    
+    template<typename T> bool Entity::HasComponent() const
+    {
+        static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
+
+        for (const auto& component : m_components)
+        {
+            if (dynamic_cast<T*>(component.get()))
+                return true;
+        }
+        return false;
+    }
 
     template<typename T, typename... Args> T* Entity::AddComponent(Args&&... args)
     {
