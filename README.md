@@ -53,5 +53,11 @@ cmake --build .
 After building, navigate to the `MyEngine_215\build\215-Engine-Sandbox\Debug` directory and run the `Sandbox.exe` executable to see the engine in action.
 
 # Commands
-``` add tri ``` -> Create an Entity with a MeshRenderer, visually a triangle (isosceles triangle).
-``` list ``` -> List all the entities in the current Scene.
+Command	Description
+| Command | Description |
+|---------|-------------|
+| ```add tri``` | Create an Entity with a MeshRenderer, visually a triangle (isosceles triangle). |
+| ```list``` | List all entities in the current Scene, including child entities. |
+| ```find <GUID>``` | Find an entity by its GUID and print its name. |
+| ```delete <GUID>``` | Remove an entity from the Scene by its GUID. |
+| ```setpos <GUID> <x> <y> <z>``` | Set a new position for the entity with the given GUID. The transform is immediately updated. |

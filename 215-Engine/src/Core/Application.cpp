@@ -1,4 +1,5 @@
 #include "Core/Application.h"
+#include <sstream>
 
 namespace Core
 {
@@ -69,6 +70,23 @@ namespace Core
                 Entity* e = m_scene.FindEntityByGUID(guid);
                 if (e) std::cout << "Found entity: " << e->GetName() << "\n";
                 else std::cout << "No entity with GUID " << guid << "\n";
+            }
+            else if (cmd.find("setpos ") == 0)
+            {
+                // Syntaxe : setpos <GUID> <x> <y> <z>
+                std::istringstream iss(cmd);
+                std::string token, guid;
+                float x, y, z;
+
+                iss >> token >> guid >> x >> y >> z;
+                Entity* e = m_scene.FindEntityByGUID(guid);
+                if (e) 
+                {
+                    e->GetTransform().SetPosition({x, y, z});
+                    std::cout << "Entity " << e->GetName() << " moved to (" 
+                            << x << ", " << y << ", " << z << ")\n";
+                }
+                else std::cout << "No entity with GUID " << guid << " found.\n";
             }
         }
     }
